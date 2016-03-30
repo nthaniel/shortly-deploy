@@ -33,5 +33,4 @@ app.get('/*', handler.navToLink);
 
 module.exports = app;
 
-
 // We are testing to see if this appears in our droplet repo
