@@ -5,7 +5,7 @@ var util = require('./lib/utility');
 var handler = require('./lib/request-handler');
 
 var app = express();
- 
+
 app.configure(function() {
   app.set('views', __dirname + '/views');
   app.set('view engine', 'ejs');
@@ -32,3 +32,6 @@ app.post('/signup', handler.signupUser);
 app.get('/*', handler.navToLink);
 
 module.exports = app;
+
+
+// We are testing to see if this appears in our droplet repo
