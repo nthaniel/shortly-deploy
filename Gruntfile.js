@@ -85,8 +85,8 @@ module.exports = function(grunt) {
     shell: {
       prodServer: {
         command: [
-          'grunt build',
-          'node server.js'
+          'grunt build'
+          // 'node server.js'
         ].join(' && '),
         options: {
         }
