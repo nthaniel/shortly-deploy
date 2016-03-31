@@ -11,7 +11,7 @@ var Link = require('../app/models/link');
 // NOTE: these tests are designed for mongo!
 /////////////////////////////////////////////////////
 
-xdescribe('', function() {
+describe('', function() {
 
   beforeEach(function(done) {
     // Log out currently signed in user
@@ -99,6 +99,7 @@ xdescribe('', function() {
         });
 
         link.save(function() {
+          link.initialize();
           done();
         });
       });
@@ -208,12 +209,25 @@ xdescribe('', function() {
   describe('Account Login:', function() {
 
     beforeEach(function(done) {
-      new User({
-        'username': 'Phillip',
-        'password': 'Phillip'
-      }).save(function() {
-        done();
-      });
+      // new User({
+      //   'username': 'Phillip',
+      //   'password': 'Phillip'
+      // }).save(function() {
+      //   done();
+      // });
+      request(app)
+        .post('/signup')
+        .send({
+          'username': 'Phillip',
+          'password': 'Phillip' })
+        .expect(302)
+        .expect(function(res) {
+          expect(res.headers.location).to.equal('/');
+          request(app)
+            .get('/logout')
+            .expect(200);
+        })
+        .end(done);
     });
 
     it('Logs in existing users', function(done) {
