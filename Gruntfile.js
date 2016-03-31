@@ -85,7 +85,7 @@ module.exports = function(grunt) {
     shell: {
       prodServer: {
         command: [
-          'grunt build'
+          'git push live master'
           // 'node server.js'
         ].join(' && '),
         options: {
@@ -131,7 +131,8 @@ module.exports = function(grunt) {
 
 
   grunt.registerTask('test', [
-    'mochaTest'
+    'mochaTest',
+    'lint'
   ]);
 
   grunt.registerTask('lint', [
@@ -139,8 +140,6 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('build', [
-    'lint',
-    'test',
     'concat',
     'cssmin:target',
     'uglify:target'
@@ -158,10 +157,11 @@ module.exports = function(grunt) {
   // MODE=production
 
   grunt.registerTask('deploy', function(n) {
-    grunt.task.run(['build']);
     if (grunt.option('prod')) {
-      grunt.task.run(['shell:prodServer']);
+      grunt.task.run(['build']);
       // add your production server task here
+    } else {
+      grunt.task.run(['test', 'shell:prodServer']);
     }
     grunt.task.run([ 'server-dev' ]);
 
