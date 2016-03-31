@@ -84,7 +84,10 @@ module.exports = function(grunt) {
 
     shell: {
       prodServer: {
-        command: 'git push live master',
+        command: [
+          'grunt build',
+          'node server.js'
+        ].join(' && '),
         options: {
         }
       }
@@ -150,6 +153,9 @@ module.exports = function(grunt) {
   //     grunt.task.run([ 'server-dev' ]);
   //   }
   // });
+
+  // use process.env.MODE === 'production' ?
+  // MODE=production
 
   grunt.registerTask('deploy', function(n) {
     grunt.task.run(['build']);
